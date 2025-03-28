@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#score,
+#water,
+#energy,
+#message {
+  position: absolute;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#score {
+  top: 10px;
+  left: 10px;
+}
+
+#water {
+  top: 40px;
+  left: 10px;
+}
+
+#energy {
+  top: 70px;
+  left: 10px;
+}
+
+#message {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.controls-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+.controls-panel button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#controls-index {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+#controls-index h3 {
+  margin: 0 0 10px 0;
+}
+
+#controls-index ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#controls-index li {
+  margin-bottom: 5px;
+}
+
+#restart-button {
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#restart-button:hover {
+  background: #3e8e41;
+}
+
+#mobile-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #mobile-controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  #mobile-controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #mobile-controls button:hover {
+    background: #3e8e41;
+  }
+
+  #controls-index {
+    display: none;
+  }
+
+  #score,
+  #water,
+  #energy,
+  #message {
+    font-size: 16px;
+    padding: 3px 6px;
+  }
+}
