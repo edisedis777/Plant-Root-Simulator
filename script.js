@@ -31,6 +31,9 @@ const gameState = {
   obstacles: [],
   activeBranch: null,
   keysPressed: {},
+  touchStart: { x: 0, y: 0 },
+  touchCurrent: { x: 0, y: 0 },
+  isSwiping: false,
 };
 
 // Nutrient types
@@ -201,12 +204,19 @@ function initializeThreeJS() {
   document.getElementById("container").appendChild(renderer.domElement);
 
   window.addEventListener("resize", () => {
+    handleResize();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
   addLighting();
+}
+
+function handleResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function addLighting() {
@@ -545,6 +555,18 @@ function processInput() {
     }
   }
 
+  // Swipe controls
+  if (gameState.isSwiping) {
+    const swipeX = gameState.touchCurrent.x - gameState.touchStart.x;
+    const swipeY = gameState.touchCurrent.y - gameState.touchStart.y;
+
+    if (Math.abs(swipeX) > 50) {
+      dirX = swipeX > 0 ? 1 : -1;
+    }
+    if (Math.abs(swipeY) > 50) {
+      dirZ = swipeY > 0 ? 1 : -1;
+    }
+  }
   if (dirX !== 0 || dirY !== 0 || dirZ !== 0) {
     gameState.activeBranch.direction.set(dirX, dirY, dirZ).normalize();
   }
@@ -847,6 +869,11 @@ function initializeGame() {
     if (event.key === "r" || event.key === "R") resetGame();
     if (event.key === " ") createNewBranch();
     if (event.key === "p" || event.key === "P") togglePause();
+    if (event.key === "f" || event.key === "F") toggleFullscreen();
+  });
+
+  window.addEventListener("orientationchange", () => {
+    handleResize();
   });
 
   document.addEventListener("keyup", (event) => {
@@ -869,39 +896,10 @@ function initializeGame() {
     mouseDown = false;
   });
 
-  document.addEventListener(
-    "touchstart",
-    (event) => {
-      event.preventDefault();
-      if (event.touches.length > 0) {
-        mouseDown = true;
-        mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-      }
-    },
-    false
-  );
-
-  document.addEventListener(
-    "touchmove",
-    (event) => {
-      event.preventDefault();
-      if (event.touches.length > 0) {
-        mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-      }
-    },
-    false
-  );
-
-  document.addEventListener(
-    "touchend",
-    (event) => {
-      event.preventDefault();
-      mouseDown = false;
-    },
-    false
-  );
+  // Touch Events
+  document.addEventListener("touchstart", handleTouchStart, { passive: false });
+  document.addEventListener("touchmove", handleTouchMove, { passive: false });
+  document.addEventListener("touchend", handleTouchEnd, { passive: false });
 
   document
     .getElementById("restart-button")
@@ -912,6 +910,10 @@ function initializeGame() {
   document
     .getElementById("pause-button")
     .addEventListener("click", togglePause);
+  document
+    .getElementById("fullscreen-button")
+    .addEventListener("click", toggleFullscreen);
+  setupDirectionalButtons();
 
   if ("ontouchstart" in window) {
     displayMessage(
@@ -925,6 +927,93 @@ function initializeGame() {
   camera.position.set(0, 10, 15);
   camera.lookAt(0, 0, 0);
   animate();
+}
+
+function handleTouchStart(event) {
+  event.preventDefault();
+  gameState.isSwiping = false;
+  if (event.touches.length > 0) {
+    mouseDown = true;
+    gameState.touchStart.x = event.touches[0].clientX;
+    gameState.touchStart.y = event.touches[0].clientY;
+    gameState.touchCurrent.x = event.touches[0].clientX;
+    gameState.touchCurrent.y = event.touches[0].clientY;
+    mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+  }
+}
+
+function handleTouchMove(event) {
+  event.preventDefault();
+  if (event.touches.length > 0) {
+    gameState.touchCurrent.x = event.touches[0].clientX;
+    gameState.touchCurrent.y = event.touches[0].clientY;
+    mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+    const swipeX = gameState.touchCurrent.x - gameState.touchStart.x;
+    const swipeY = gameState.touchCurrent.y - gameState.touchStart.y;
+    if (Math.abs(swipeX) > 50 || Math.abs(swipeY) > 50) {
+      gameState.isSwiping = true;
+    }
+  }
+}
+
+function handleTouchEnd(event) {
+  event.preventDefault();
+  mouseDown = false;
+  gameState.isSwiping = false;
+}
+
+function setupDirectionalButtons() {
+  const upButton = document.getElementById("up-button");
+  const downButton = document.getElementById("down-button");
+  const leftButton = document.getElementById("left-button");
+  const rightButton = document.getElementById("right-button");
+
+  const buttonMap = {
+    "up-button": "ArrowUp",
+    "down-button": "ArrowDown",
+    "left-button": "ArrowLeft",
+    "right-button": "ArrowRight",
+  };
+
+  const handleButtonPress = (buttonId, isPressed) => {
+    const key = buttonMap[buttonId];
+    if (key) {
+      gameState.keysPressed[key] = isPressed;
+    }
+  };
+
+  for (const buttonId in buttonMap) {
+    const button = document.getElementById(buttonId);
+    if (button) {
+      button.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        handleButtonPress(buttonId, true);
+      });
+      button.addEventListener("touchend", (event) => {
+        event.preventDefault();
+        handleButtonPress(buttonId, false);
+      });
+      button.addEventListener("mousedown", () =>
+        handleButtonPress(buttonId, true)
+      );
+      button.addEventListener("mouseup", () =>
+        handleButtonPress(buttonId, false)
+      );
+      button.addEventListener("mouseleave", () =>
+        handleButtonPress(buttonId, false)
+      );
+    }
+  }
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
 }
 
 function togglePause() {
