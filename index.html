@@ -2,9 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Root Nutrient Simulator</title>
     <link rel="stylesheet" href="styles.css" />
+    <meta
+      name="description"
+      content="A mobile-friendly root growth simulation game" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
   <body>
     <div id="container"></div>
@@ -12,6 +20,7 @@
     <div id="water">Water: 100%</div>
     <div id="energy">Energy: 50%</div>
     <div id="message"></div>
+
     <div id="controls-index">
       <h3>Controls:</h3>
       <ul>
@@ -23,10 +32,20 @@
       </ul>
       <button id="restart-button">Restart Game</button>
     </div>
+
+    <div id="mobile-directional-pad">
+      <button id="up-button">↑</button>
+      <button id="down-button">↓</button>
+      <button id="left-button">←</button>
+      <button id="right-button">→</button>
+    </div>
+
     <div id="mobile-controls">
       <button id="new-branch-button">New Branch</button>
       <button id="pause-button">Start</button>
+      <button id="fullscreen-button">Fullscreen</button>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="script.js"></script>
   </body>
