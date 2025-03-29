@@ -36,15 +36,6 @@ In this unique simulation, you control a root system with the goal of surviving 
 - **Language**: JavaScript
 - **Platform**: Web-based game
 
-## 📦 Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/root-nutrient-simulator.git
-```
-
-2. Open `index.html` in your web browser
-
 ## 🚀 How to Play
 
 1. Start the game by moving your root
@@ -62,20 +53,18 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ## 🎨 Roadmap
 
 - [ ] Add more complex nutrient mechanics
 - [ ] Implement difficulty levels
 - [ ] Add sound effects and background music
 
-## 🌟 Acknowledgments
+## 🌟 Credits
 
 - Inspired by the fascinating world of plants
 - Created with ❤️
----
 
-**Disclaimer**: This is a simulation game and should not be used for actual scientific research without proper validation.
+- ## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+**Disclaimer**: This is a simulation game.
