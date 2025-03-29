@@ -2,7 +2,7 @@
 
 ## Overview
 
-Plant Root Simulator is an engaging and educational game that puts you in control of a growing root system. Navigate through the underground environment, create branches, and strategically explore to collect nutrients and water while managing your energy.
+Plant Root Simulator is an engaging and educational desktop webpage that puts you in control of a growing root system. Navigate through the underground environment, create branches, and strategically explore to collect nutrients and water while managing your energy.
 
 <img width="1439" alt="Screenshot 2025-03-28 at 14 25 31" src="https://github.com/user-attachments/assets/c5dead71-03ec-4569-9446-505e4d72440a" />
 
