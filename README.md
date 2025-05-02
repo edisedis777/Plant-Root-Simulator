@@ -5,7 +5,6 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](#)
 [![Three.js](https://img.shields.io/badge/Three.js-000?logo=threedotjs&logoColor=fff)](#)
 [![Markdown](https://img.shields.io/badge/Markdown-%23000000.svg?logo=markdown&logoColor=white)](#)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Overview
 
@@ -73,5 +72,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 - ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-**Disclaimer**: This is a simulation game.
+Distributed under the GNU Affero General Public License v3.0 License. See `LICENSE` for more information.
